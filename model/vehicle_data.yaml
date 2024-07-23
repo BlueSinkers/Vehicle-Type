@@ -1,0 +1,8 @@
+train: INPUT TRAIN PATH HERE
+  # Path to the training images
+val: INPUT VALIDATION PATH HERE
+  # Path to the validation images
+
+nc: 6  # Number of classes
+
+names: ['car', 'threewheel', 'bus', 'truck', 'motorbike', 'van']
