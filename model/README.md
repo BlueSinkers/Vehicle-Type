@@ -1,5 +1,11 @@
 # INFO
-As mentioned in the other README file, this folder includes the weights of the model along with the standard output of the YOLO fine-tuning. Check the images folder to see the images I'm testing this model on! 
+As mentioned in the other README file, this folder includes the weights of the model along with the standard output of the YOLO fine-tuning. Check the images folder to see the images I'm testing this model on (note that the model has ALREADY been made I'm just testing it to see how it's working). Here are the different classes of images:
+- car
+- threewheel
+- bus
+- truck
+- motorbike
+- van
 
 The most important file here is the "vehicle_detection.pt" which contains the weights of the model importantly in binary format. PT stands for PyTorch (these are pytorch files because YOLO when installed through GitHub runs on PyTorch). For those interested, if you try and obtain YOLO in different formats such as through DarkNet, you will typically have differing file formats, most commonly being ".weights" format. 
 
