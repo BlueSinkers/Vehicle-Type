@@ -35,27 +35,30 @@ folders = [f for f in os.listdir(image_path) if os.path.isdir(os.path.join(image
 for folder in folders:
     vehicle_path = image_path + '/' + folder 
     vehicle_contents = os.listdir(vehicle_path)
+    if folder == "NO_MODEL":
+        vehicle_contents = []
     for image in vehicle_contents:
         image_filepath = vehicle_path + '/' + image
         mime_type, _ = mimetypes.guess_type(image)
         if mime_type == "image/jpeg":
             results = model(image_filepath)
-            
-            main_prediction = False
-            for pred in results.pred[0]:
-                class_id = int(pred[5])  # Class ID (index)
-                class_name = class_list[class_id]  # Class name
-                
-                if class_name == folder and main_prediction == False:
-                    main_prediction = True
+            predictions = results.pred[0]
+            if len(predictions) == 0:
+                output_text += f'Image Name: {image}, Class ID: {class_id}, Class name: NO PREDICTIONS AVAILABLE \n'
+            else:
+                sorted_predictions = sorted(predictions, key=lambda x: x[4], reverse=True)
+                best_prediction = sorted_predictions[0]
+                class_id = int(best_prediction[5])
+                class_name = results.names[class_id]
+                confidence = float(best_prediction[4])
+                output_text += f'Image Name: {image}, Class ID: {class_id}, Class name: {class_name}, Confidence: {round(confidence, 2)} \n' 
+                if class_name == folder:
                     accurate_pred += 1
                     total_pred += 1
-                    output_text += f'Image Name: {image}, Class ID: {class_id}, Class name: {class_name} \n' 
-                elif main_prediction == False:
-                    main_prediction = True
+                else:
                     total_pred += 1
-                    output_text += f'Image Name: {image}, Class ID: {class_id}, Class name: {class_name} \n' 
             # Print results
+            #results.print() #Display results
             #results.show()   # Display results
             results.save()   # Save results to a directory'''
 
